@@ -21,7 +21,9 @@
         android:layout_alignParentStart="true"
         android:layout_toLeftOf="@id/sale_button"
         android:layout_toStartOf="@id/sale_button"
-        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:maxLines="1"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@android:color/black"
         tools:text="Product name" />
 
     <TextView
@@ -29,6 +31,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/product_name"
+        android:textAllCaps="true"
         tools:text="Quantity: " />
 
     <TextView
@@ -45,6 +48,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/label_quantity"
+        android:textAllCaps="true"
         tools:text="Price: " />
 
     <TextView
