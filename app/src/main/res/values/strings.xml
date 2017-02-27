@@ -3,4 +3,20 @@
 
     <!-- Text for the case of empty list [CHAR LIMIT = 50]-->
     <string name="empty_list_text">Click &quot;+&quot; button to start.</string>
+
+    <!-- Labels and buttons at DetailActivity -->
+    <string name="detail_activity_name_key">key</string>
+    <string name="detail_activity_name_edit">Edit product</string>
+    <string name="detail_activity_name_add">New product</string>
+    <string name="detail_product_name">Name of product</string>
+    <string name="detail_label_quantity">Quantity:</string>
+    <string name="detail_quantity_change">+ or -</string>
+    <string name="detail_label_price">Price:</string>
+    <string name="detail_price_hint">Enter the price</string>
+    <string name="detail_price_dollar" translatable="false">$</string>
+    <string name="detail_button_sale">Sale</string>
+    <string name="detail_button_shipment">Shipment</string>
+    <string name="detail_button_save">Save</string>
+    <string name="detail_button_delete">Delete</string>
+    <string name="detail_button_order">Order</string>
 </resources>

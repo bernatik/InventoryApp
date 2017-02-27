@@ -14,22 +14,23 @@
     <ListView
         android:id="@+id/catalog_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="wrap_content" />
 
     <TextView
         android:id="@+id/empty_list_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        tools:text="@string/empty_list_text"/>
+        android:text="@string/empty_list_text"
+        android:visibility="gone" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/addButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:layout_margin="16dp"
         android:clickable="true"
         android:src="@drawable/ic_plus_white_24dp"
