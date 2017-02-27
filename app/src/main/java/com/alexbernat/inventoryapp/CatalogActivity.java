@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ListView;
 
@@ -20,13 +19,12 @@ public class CatalogActivity extends AppCompatActivity {
         listView.setEmptyView(emptyView);
 
         FloatingActionButton addButton = (FloatingActionButton) findViewById(R.id.addButton);
-        addButton.setOnTouchListener(new View.OnTouchListener() {
+        addButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
+            public void onClick(View v) {
                 Intent intent = new Intent(CatalogActivity.this, DetailActivity.class);
                 intent.putExtra(getString(R.string.detail_activity_name_key), getString(R.string.detail_activity_name_add));
                 startActivity(intent);
-                return true;
             }
         });
     }
