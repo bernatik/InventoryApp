@@ -39,7 +39,7 @@ public final class InventoryContract {
                         COLUMN_NAME_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                         COLUMN_NAME_PRODUCT_NAME + " TEXT NOT NULL, " +
                         COLUMN_NAME_QUANTITY + " INTEGER NOT NULL, " +
-                        COLUMN_NAME_PRICE + " FLOAT NOT NULL, " +
+                        COLUMN_NAME_PRICE + " DOUBLE NOT NULL, " +
                         COLUMN_NAME_IMAGE + " BLOB);";
 
         public static final String SQL_DELETE_ENTRIES =

@@ -4,6 +4,11 @@
     <!-- Text for the case of empty list [CHAR LIMIT = 50]-->
     <string name="empty_list_text">Click &quot;+&quot; button to start.</string>
 
+    <!-- Labels for items values on main list -->
+    <string name="catalog_label_quantity">Quantity :</string>
+    <string name="catalog_label_price">Price :$</string>
+    <string name="catalog_button_sale">Sale</string>
+
     <!-- Labels and buttons at DetailActivity -->
     <string name="detail_activity_name_key">key</string>
     <string name="detail_activity_name_edit">Edit product</string>

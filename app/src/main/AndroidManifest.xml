@@ -23,6 +23,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".CatalogActivity" />
         </activity>
+
+        <provider
+            android:name="com.alexbernat.inventoryapp.data.InventoryProvider"
+            android:authorities="com.alexbernat.inventoryapp" />
     </application>
 
 </manifest>

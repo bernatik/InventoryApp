@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:paddingBottom="8dp">
 
     <Button
         android:id="@+id/sale_button"
@@ -11,7 +12,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        tools:text="sale" />
+        android:text="@string/catalog_button_sale" />
 
     <TextView
         android:id="@+id/product_name"
@@ -31,8 +32,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/product_name"
-        android:textAllCaps="true"
-        tools:text="Quantity: " />
+        android:text="@string/catalog_label_quantity" />
 
     <TextView
         android:id="@+id/quantity"
@@ -48,8 +48,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/label_quantity"
-        android:textAllCaps="true"
-        tools:text="Price: " />
+        android:text="@string/catalog_label_price" />
 
     <TextView
         android:id="@+id/price"
