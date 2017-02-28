@@ -1,5 +1,6 @@
 package com.alexbernat.inventoryapp.data;
 
+import android.net.Uri;
 import android.provider.BaseColumns;
 
 /**
@@ -7,6 +8,10 @@ import android.provider.BaseColumns;
  */
 
 public final class InventoryContract {
+
+    public static final String AUTHORITY = "com.alexbernat.inventoryapp";
+    public static final Uri BASE_URI = Uri.parse("content://" + AUTHORITY);
+    public static final String URI_PATH = "inventory";
 
     private InventoryContract() {
 
@@ -21,13 +26,15 @@ public final class InventoryContract {
         public static final String COLUMN_NAME_PRICE = "price";
         public static final String COLUMN_NAME_IMAGE = "image";
 
+        public static final Uri CONTENT_URI = Uri.withAppendedPath(BASE_URI, URI_PATH);
+
         public static final String SQL_CREATE_ENTRIES =
                 "CREATE TABLE " + TABLE_NAME + " (" +
-                        COLUMN_NAME_ID + " INTEGER PRIMARY KEY AUTO_INCREMENT, " +
+                        COLUMN_NAME_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                         COLUMN_NAME_PRODUCT_NAME + " TEXT NOT NULL, " +
                         COLUMN_NAME_QUANTITY + " INTEGER NOT NULL, " +
                         COLUMN_NAME_PRICE + " FLOAT NOT NULL, " +
-                        COLUMN_NAME_IMAGE + " BLOB)";
+                        COLUMN_NAME_IMAGE + " BLOB);";
 
         public static final String SQL_DELETE_ENTRIES =
                 "DROP TABLE IF EXISTS " + TABLE_NAME;
