@@ -1,5 +1,6 @@
 package com.alexbernat.inventoryapp.data;
 
+import android.content.ContentResolver;
 import android.net.Uri;
 import android.provider.BaseColumns;
 
@@ -27,6 +28,11 @@ public final class InventoryContract {
         public static final String COLUMN_NAME_IMAGE = "image";
 
         public static final Uri CONTENT_URI = Uri.withAppendedPath(BASE_URI, URI_PATH);
+
+        public static final String MIME_PATH = ContentResolver.CURSOR_DIR_BASE_TYPE + "/"
+                + AUTHORITY + "/" + URI_PATH;
+        public static final String MIME_SINGLE_ROW = ContentResolver.CURSOR_ITEM_BASE_TYPE + "/"
+                + AUTHORITY + "/" + URI_PATH;
 
         public static final String SQL_CREATE_ENTRIES =
                 "CREATE TABLE " + TABLE_NAME + " (" +
