@@ -12,6 +12,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
+        android:focusable="false"
         android:text="@string/catalog_button_sale" />
 
     <TextView

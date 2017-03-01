@@ -54,10 +54,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
+                    android:hint="@string/detail_quantity"
                     android:imeOptions="actionDone"
-                    android:inputType="number"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    tools:text="45" />
+                    android:inputType="number" />
 
                 <Button
                     android:id="@+id/detail_button_sale"

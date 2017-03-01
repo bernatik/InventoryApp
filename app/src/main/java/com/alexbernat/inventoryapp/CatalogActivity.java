@@ -1,6 +1,7 @@
 package com.alexbernat.inventoryapp;
 
 import android.app.LoaderManager;
+import android.content.ContentUris;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
@@ -9,6 +10,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.alexbernat.inventoryapp.data.InventoryContract;
@@ -39,6 +41,15 @@ public class CatalogActivity extends AppCompatActivity implements LoaderManager.
 
         adapter = new InventoryAdapter(this, null);
         listView.setAdapter(adapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(CatalogActivity.this, DetailActivity.class);
+                intent.setData(ContentUris.withAppendedId(InventoryContract.InventoryEntry.CONTENT_URI, id));
+                startActivity(intent);
+            }
+        });
 
         getLoaderManager().initLoader(LOADER_ID, null, this);
     }
