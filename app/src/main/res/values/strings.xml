@@ -36,6 +36,7 @@
     <string name="toast_fail_update">Unable to update</string>
     <string name="toast_fail_order">Unable to order</string>
     <string name="toast_enter_name">Fill product name field</string>
+    <string name="toast_sale_successful">Successfully sale %1$d of %2$s</string>
 
     <!-- Messages for ordering new product by Order button-->
     <string name="order_subject">Order &#160;</string>
