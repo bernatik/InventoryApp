@@ -32,11 +32,13 @@
     <string name="toast_created">Product created</string>
     <string name="toast_deleted">Product deleted</string>
     <string name="toast_updated">Product updated</string>
+    <string name="toast_fail_create">Unable to create</string>
     <string name="toast_fail_delete">Unable to delete</string>
     <string name="toast_fail_update">Unable to update</string>
     <string name="toast_fail_order">Unable to order</string>
     <string name="toast_enter_name">Fill product name field</string>
     <string name="toast_sale_successful">Successfully sale %1$d of %2$s</string>
+    <string name="toast_check_inputs">Some fields are empty. Please fill them</string>
 
     <!-- Messages for ordering new product by Order button-->
     <string name="order_subject">Order &#160;</string>

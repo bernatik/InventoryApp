@@ -22,6 +22,7 @@ import com.alexbernat.inventoryapp.data.InventoryContract;
 public class DetailActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
     public static final String KEY_CONTENT_URI = "content Uri";
+    public static final String TAG_DELETE_DIALOG = "deleteDialog";
     private static final int LOADER_ID = 2;
     private EditText etName, etQuantity, etPrice, etChange;
     private Button btnSale, btnShipment, btnSave, btnOrder, btnDelete;
@@ -65,24 +66,28 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
             public void onClick(View v) {
                 if (isAddMode) {
                     ContentValues values = new ContentValues();
-                    values.put(InventoryContract.InventoryEntry.COLUMN_NAME_PRODUCT_NAME, etName.getText().toString());
-                    values.put(InventoryContract.InventoryEntry.COLUMN_NAME_QUANTITY, Integer.parseInt(etQuantity.getText().toString()));
-                    values.put(InventoryContract.InventoryEntry.COLUMN_NAME_PRICE, Double.parseDouble(etPrice.getText().toString()));
-                    getContentResolver().insert(contentUri, values);
-                    Toast.makeText(getApplicationContext(), R.string.toast_created, Toast.LENGTH_SHORT).show();
+                    values = getCorrectValues(values);
+                    if (values != null) {
+                        Uri newItemUri = getContentResolver().insert(contentUri, values);
+                        if (newItemUri == null) {
+                            Toast.makeText(getApplicationContext(), R.string.toast_fail_create, Toast.LENGTH_SHORT).show();
+                        }
+                        Toast.makeText(getApplicationContext(), R.string.toast_created, Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
                 } else {
                     ContentValues values = new ContentValues();
-                    values.put(InventoryContract.InventoryEntry.COLUMN_NAME_PRODUCT_NAME, etName.getText().toString());
-                    values.put(InventoryContract.InventoryEntry.COLUMN_NAME_QUANTITY, Integer.parseInt(etQuantity.getText().toString()));
-                    values.put(InventoryContract.InventoryEntry.COLUMN_NAME_PRICE, Double.parseDouble(etPrice.getText().toString()));
-                    int rowsUpdated = getContentResolver().update(contentUri, values, null, null);
-                    if (rowsUpdated == 0) {
-                        Toast.makeText(getApplicationContext(), R.string.toast_fail_update, Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(getApplicationContext(), R.string.toast_updated, Toast.LENGTH_SHORT).show();
+                    values = getCorrectValues(values);
+                    if (values != null) {
+                        int rowsUpdated = getContentResolver().update(contentUri, values, null, null);
+                        if (rowsUpdated == 0) {
+                            Toast.makeText(getApplicationContext(), R.string.toast_fail_update, Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getApplicationContext(), R.string.toast_updated, Toast.LENGTH_SHORT).show();
+                        }
+                        finish();
                     }
                 }
-                finish();
             }
         });
 
@@ -96,7 +101,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
                     Bundle args = new Bundle();
                     args.putString(KEY_CONTENT_URI, contentUri.toString());
                     dialogFragment.setArguments(args);
-                    dialogFragment.show(getSupportFragmentManager(), "deleteDialog");
+                    dialogFragment.show(getSupportFragmentManager(), TAG_DELETE_DIALOG);
                 }
             }
         });
@@ -120,6 +125,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
                 }
             }
         });
+
     }
 
     @Override
@@ -150,6 +156,18 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
         etName.setText("");
         etQuantity.setText("");
         etPrice.setText("");
+    }
+
+    private ContentValues getCorrectValues(ContentValues values) {
+        if (TextUtils.isEmpty(etName.getText()) || TextUtils.isEmpty(etQuantity.getText()) || TextUtils.isEmpty(etPrice.getText())) {
+            Toast.makeText(getApplicationContext(), R.string.toast_check_inputs, Toast.LENGTH_SHORT).show();
+            values = null;
+        } else {
+            values.put(InventoryContract.InventoryEntry.COLUMN_NAME_PRODUCT_NAME, etName.getText().toString());
+            values.put(InventoryContract.InventoryEntry.COLUMN_NAME_QUANTITY, Integer.parseInt(etQuantity.getText().toString()));
+            values.put(InventoryContract.InventoryEntry.COLUMN_NAME_PRICE, Double.parseDouble(etPrice.getText().toString()));
+        }
+        return values;
     }
 
 }

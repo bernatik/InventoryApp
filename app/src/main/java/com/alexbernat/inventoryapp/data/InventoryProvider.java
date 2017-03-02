@@ -78,6 +78,9 @@ public class InventoryProvider extends ContentProvider {
     }
 
     private Uri insertItem(Uri uri, ContentValues values) {
+        if (values.size() == 0) {
+            return null;
+        }
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
         long newRowId = db.insert(InventoryContract.InventoryEntry.TABLE_NAME, null, values);
         if (newRowId == -1) {
@@ -129,9 +132,10 @@ public class InventoryProvider extends ContentProvider {
         }
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
         int rowsUpdated = db.update(InventoryContract.InventoryEntry.TABLE_NAME, values, selection, selectionArgs);
-        if (rowsUpdated != 0) {
-            getContext().getContentResolver().notifyChange(uri, null);
+        if (rowsUpdated == 0) {
+            return 0;
         }
+        getContext().getContentResolver().notifyChange(uri, null);
         return rowsUpdated;
     }
 
