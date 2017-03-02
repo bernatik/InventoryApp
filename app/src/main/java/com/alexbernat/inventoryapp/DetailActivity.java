@@ -25,7 +25,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
     public static final String TAG_DELETE_DIALOG = "deleteDialog";
     private static final int LOADER_ID = 2;
     private EditText etName, etQuantity, etPrice, etChange;
-    private Button btnSale, btnShipment, btnSave, btnOrder, btnDelete;
+    private Button btnSale, btnReceive, btnSave, btnOrder, btnDelete;
     private ImageView ivPhoto;
     private boolean isAddMode = false;
     private Uri contentUri = null;
@@ -40,7 +40,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
         etPrice = (EditText) findViewById(R.id.detail_edit_price);
         etChange = (EditText) findViewById(R.id.detail_edit_quantity);
         btnSale = (Button) findViewById(R.id.detail_button_sale);
-        btnShipment = (Button) findViewById(R.id.detail_button_shipment);
+        btnReceive = (Button) findViewById(R.id.detail_button_shipment);
         btnSave = (Button) findViewById(R.id.detail_button_save);
         btnOrder = (Button) findViewById(R.id.detail_button_order);
         btnDelete = (Button) findViewById(R.id.detail_button_delete);
@@ -51,7 +51,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
             setTitle(getString(R.string.detail_activity_name_add));
             etChange.setVisibility(View.GONE);
             btnSale.setVisibility(View.GONE);
-            btnShipment.setVisibility(View.GONE);
+            btnReceive.setVisibility(View.GONE);
             btnDelete.setText(R.string.detail_button_clear);
             isAddMode = true;
         } else {
@@ -126,6 +126,29 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
             }
         });
 
+        btnSale.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int quantity = parseQuantity();
+                int numberOfItemsToSale = Integer.parseInt(etChange.getText().toString());
+                quantity = quantity - numberOfItemsToSale;
+                if (quantity < 0) {
+                    Toast.makeText(getApplicationContext(), R.string.toast_sale_failed, Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                etQuantity.setText(String.valueOf(quantity));
+            }
+        });
+
+        btnReceive.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int quantity = parseQuantity();
+                int numberOfItemsToGet = Integer.parseInt(etChange.getText().toString());
+                quantity = quantity + numberOfItemsToGet;
+                etQuantity.setText(String.valueOf(quantity));
+            }
+        });
     }
 
     @Override
@@ -168,6 +191,13 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
             values.put(InventoryContract.InventoryEntry.COLUMN_NAME_PRICE, Double.parseDouble(etPrice.getText().toString()));
         }
         return values;
+    }
+
+    private int parseQuantity() {
+        if (TextUtils.isEmpty(etChange.getText())) {
+            etChange.setText(String.valueOf(1));
+        }
+        return Integer.parseInt(etQuantity.getText().toString());
     }
 
 }

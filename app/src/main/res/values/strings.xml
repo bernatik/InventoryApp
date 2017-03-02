@@ -4,9 +4,9 @@
     <!-- Text for the case of empty list [CHAR LIMIT = 50]-->
     <string name="empty_list_text">Click &quot;+&quot; button to start.</string>
 
-    <!-- Labels for items values on main list -->
-    <string name="catalog_label_quantity">Quantity :</string>
-    <string name="catalog_label_price">Price :$</string>
+    <!-- Labels for item fields on main list -->
+    <string name="catalog_label_quantity">Quantity: &#160;</string>
+    <string name="catalog_label_price">Price: $ &#160;</string>
     <string name="catalog_button_sale">Sale</string>
 
     <!-- Labels and buttons at DetailActivity -->
@@ -22,7 +22,7 @@
     <string name="detail_price_hint">Enter the price</string>
     <string name="detail_price_dollar" translatable="false">$</string>
     <string name="detail_button_sale">Sale</string>
-    <string name="detail_button_shipment">Shipment</string>
+    <string name="detail_button_receive">Receive</string>
     <string name="detail_button_save">Save</string>
     <string name="detail_button_delete">Delete</string>
     <string name="detail_button_clear">Clear</string>
@@ -38,6 +38,7 @@
     <string name="toast_fail_order">Unable to order</string>
     <string name="toast_enter_name">Fill product name field</string>
     <string name="toast_sale_successful">Successfully sale %1$d of %2$s</string>
+    <string name="toast_sale_failed">You have not enough products to sale</string>
     <string name="toast_check_inputs">Some fields are empty. Please fill them</string>
 
     <!-- Messages for ordering new product by Order button-->

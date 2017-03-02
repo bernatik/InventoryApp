@@ -80,7 +80,7 @@
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentRight="true"
                         android:layout_below="@id/detail_button_sale"
-                        android:text="@string/detail_button_shipment" />
+                        android:text="@string/detail_button_receive" />
 
                     <EditText
                         android:id="@+id/detail_edit_quantity"
