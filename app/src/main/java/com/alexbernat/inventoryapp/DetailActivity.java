@@ -21,6 +21,7 @@ import com.alexbernat.inventoryapp.data.InventoryContract;
 
 public class DetailActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
+    public static final String KEY_CONTENT_URI = "content Uri";
     private static final int LOADER_ID = 2;
     private EditText etName, etQuantity, etPrice, etChange;
     private Button btnSale, btnShipment, btnSave, btnOrder, btnDelete;
@@ -91,13 +92,11 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
                 if (isAddMode) {
                     clearUI();
                 } else {
-                    int rowsDeleted = getContentResolver().delete(contentUri, null, null);
-                    if (rowsDeleted != 0) {
-                        Toast.makeText(getApplicationContext(), R.string.toast_deleted, Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(getApplicationContext(), R.string.toast_fail_delete, Toast.LENGTH_SHORT).show();
-                    }
-                    finish();
+                    DeleteDialogFragment dialogFragment = new DeleteDialogFragment();
+                    Bundle args = new Bundle();
+                    args.putString(KEY_CONTENT_URI, contentUri.toString());
+                    dialogFragment.setArguments(args);
+                    dialogFragment.show(getSupportFragmentManager(), "deleteDialog");
                 }
             }
         });
@@ -152,4 +151,5 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
         etQuantity.setText("");
         etPrice.setText("");
     }
+
 }

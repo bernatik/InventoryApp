@@ -42,4 +42,10 @@
     <string name="order_subject">Order &#160;</string>
     <string name="order_body">Hi!
         I want to order %1$s in quantity of: &#160;</string>
+
+    <!-- Delete dialog -->
+    <string name="dialog_delete_title">Delete alert</string>
+    <string name="dialog_delete_message">Are you sure to delete this product?</string>
+    <string name="dialog_cancel">Cancel</string>
+    <string name="dialog_delete_confirm">Delete</string>
 </resources>
