@@ -50,17 +50,17 @@ public class InventoryAdapter extends CursorAdapter {
             @Override
             public void onClick(View v) {
                 cursor.moveToPosition((int) v.getTag());
-                String productName = cursor.getString(cursor.getColumnIndex(InventoryContract.InventoryEntry.COLUMN_NAME_PRODUCT_NAME));
-                long id = cursor.getLong(cursor.getColumnIndex(InventoryContract.InventoryEntry.COLUMN_NAME_ID));
                 int quantity = cursor.getInt(cursor.getColumnIndex(InventoryContract.InventoryEntry.COLUMN_NAME_QUANTITY));
                 quantity = quantity - 1;
                 if (quantity < 0) {
                     Toast.makeText(context, R.string.toast_sale_failed, Toast.LENGTH_SHORT).show();
                 } else {
+                    long id = cursor.getLong(cursor.getColumnIndex(InventoryContract.InventoryEntry.COLUMN_NAME_ID));
                     ContentValues values = new ContentValues();
                     values.put(InventoryContract.InventoryEntry.COLUMN_NAME_QUANTITY, quantity);
                     Uri currentUri = ContentUris.withAppendedId(InventoryContract.InventoryEntry.CONTENT_URI, id);
                     int rowsUpdated = context.getContentResolver().update(currentUri, values, null, null);
+                    String productName = cursor.getString(cursor.getColumnIndex(InventoryContract.InventoryEntry.COLUMN_NAME_PRODUCT_NAME));
                     if (rowsUpdated != 0) {
                         String message = context.getString(R.string.toast_sale_successful, SALE_INCREMENT, productName);
                         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
