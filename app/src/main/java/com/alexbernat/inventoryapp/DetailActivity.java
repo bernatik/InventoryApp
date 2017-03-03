@@ -13,8 +13,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -32,11 +35,20 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
     public static final String TAG_DELETE_DIALOG = "deleteDialog";
     public static final String TAG_ORDER_DIALOG = "orderDialog";
     static final int REQUEST_IMAGE_CAPTURE = 1;
+    private static final String TAG_QUIT_DIALOG = "quitDialog";
     private static final int LOADER_ID = 2;
     private EditText etName, etQuantity, etPrice, etChange;
     private ImageView ivPhoto;
     private boolean isAddMode = false;
     private Uri contentUri = null;
+    private boolean isItemChanged = false;
+    private View.OnTouchListener touchListener = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            isItemChanged = true;
+            return false;
+        }
+    };
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,15 +56,24 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
         setContentView(R.layout.detail_layout);
 
         etName = (EditText) findViewById(R.id.detail_product_name);
+        etName.setOnTouchListener(touchListener);
         etQuantity = (EditText) findViewById(R.id.detail_quantity);
+        etQuantity.setOnTouchListener(touchListener);
         etPrice = (EditText) findViewById(R.id.detail_edit_price);
+        etPrice.setOnTouchListener(touchListener);
         etChange = (EditText) findViewById(R.id.detail_edit_quantity);
+        etChange.setOnTouchListener(touchListener);
         Button btnSale = (Button) findViewById(R.id.detail_button_sale);
+        btnSale.setOnTouchListener(touchListener);
         Button btnReceive = (Button) findViewById(R.id.detail_button_shipment);
+        btnReceive.setOnTouchListener(touchListener);
         Button btnSave = (Button) findViewById(R.id.detail_button_save);
+        btnSave.setOnTouchListener(touchListener);
         Button btnOrder = (Button) findViewById(R.id.detail_button_order);
+        btnOrder.setOnTouchListener(touchListener);
         Button btnDelete = (Button) findViewById(R.id.detail_button_delete);
         ivPhoto = (ImageView) findViewById(R.id.detail_image_product);
+        ivPhoto.setOnTouchListener(touchListener);
 
         contentUri = getIntent().getData();
         if (contentUri.equals(InventoryContract.InventoryEntry.CONTENT_URI)) {
@@ -176,6 +197,32 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
             Bitmap photoBitmap = (Bitmap) extras.get("data");
             ivPhoto.setImageBitmap(photoBitmap);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (isItemChanged) {
+            QuitDialogFragment dialog = new QuitDialogFragment();
+            dialog.show(getFragmentManager(), TAG_QUIT_DIALOG);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                if (isItemChanged) {
+                    QuitDialogFragment dialog = new QuitDialogFragment();
+                    dialog.show(getFragmentManager(), TAG_QUIT_DIALOG);
+                    return true;
+                }
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

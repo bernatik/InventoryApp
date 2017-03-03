@@ -57,4 +57,10 @@
     <string name="dialog_order_message">What type of connection do you prefer?</string>
     <string name="dialog_order_phone">Phone call</string>
     <string name="dialog_order_mail">Write email</string>
+
+    <!-- Quit without saving dialog -->
+    <string name="dialog_quit_title">Quit alert</string>
+    <string name="dialog_quit_message">You have some unsaved changes. Are you sure you want to quit?</string>
+    <string name="dialog_quit_cancel">Keep editing</string>
+    <string name="dialog_quit_confirm">Quit</string>
 </resources>
