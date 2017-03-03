@@ -51,4 +51,10 @@
     <string name="dialog_delete_message">Are you sure to delete this product?</string>
     <string name="dialog_cancel">Cancel</string>
     <string name="dialog_delete_confirm">Delete</string>
+
+    <!-- Order dialog -->
+    <string name="dialog_order_title">Order</string>
+    <string name="dialog_order_message">What type of connection do you prefer?</string>
+    <string name="dialog_order_phone">Phone call</string>
+    <string name="dialog_order_mail">Write email</string>
 </resources>

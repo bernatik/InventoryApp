@@ -28,13 +28,13 @@ import java.io.IOException;
 public class DetailActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
     public static final String KEY_CONTENT_URI = "content Uri";
+    public static final String KEY_PRODUCT_NAME = "productName";
     public static final String TAG_DELETE_DIALOG = "deleteDialog";
+    public static final String TAG_ORDER_DIALOG = "orderDialog";
     static final int REQUEST_IMAGE_CAPTURE = 1;
     private static final int LOADER_ID = 2;
     private EditText etName, etQuantity, etPrice, etChange;
-    private Button btnSale, btnReceive, btnSave, btnOrder, btnDelete;
     private ImageView ivPhoto;
-    private Bitmap imagePhoto;
     private boolean isAddMode = false;
     private Uri contentUri = null;
 
@@ -47,11 +47,11 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
         etQuantity = (EditText) findViewById(R.id.detail_quantity);
         etPrice = (EditText) findViewById(R.id.detail_edit_price);
         etChange = (EditText) findViewById(R.id.detail_edit_quantity);
-        btnSale = (Button) findViewById(R.id.detail_button_sale);
-        btnReceive = (Button) findViewById(R.id.detail_button_shipment);
-        btnSave = (Button) findViewById(R.id.detail_button_save);
-        btnOrder = (Button) findViewById(R.id.detail_button_order);
-        btnDelete = (Button) findViewById(R.id.detail_button_delete);
+        Button btnSale = (Button) findViewById(R.id.detail_button_sale);
+        Button btnReceive = (Button) findViewById(R.id.detail_button_shipment);
+        Button btnSave = (Button) findViewById(R.id.detail_button_save);
+        Button btnOrder = (Button) findViewById(R.id.detail_button_order);
+        Button btnDelete = (Button) findViewById(R.id.detail_button_delete);
         ivPhoto = (ImageView) findViewById(R.id.detail_image_product);
 
         contentUri = getIntent().getData();
@@ -109,7 +109,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
                     Bundle args = new Bundle();
                     args.putString(KEY_CONTENT_URI, contentUri.toString());
                     dialogFragment.setArguments(args);
-                    dialogFragment.show(getSupportFragmentManager(), TAG_DELETE_DIALOG);
+                    dialogFragment.show(getFragmentManager(), TAG_DELETE_DIALOG);
                 }
             }
         });
@@ -120,16 +120,11 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
                 if (TextUtils.isEmpty(etName.getText())) {
                     Toast.makeText(getApplicationContext(), R.string.toast_enter_name, Toast.LENGTH_SHORT).show();
                 } else {
-                    String emailBody = getString(R.string.order_body, etName.getText());
-                    Intent intent = new Intent(Intent.ACTION_SEND);
-                    intent.setType("*/*");
-                    intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.order_subject) + etName.getText());
-                    intent.putExtra(Intent.EXTRA_TEXT, emailBody);
-                    if (intent.resolveActivity(getPackageManager()) != null) {
-                        startActivity(intent);
-                    } else {
-                        Toast.makeText(getApplicationContext(), R.string.toast_fail_order, Toast.LENGTH_SHORT).show();
-                    }
+                    OrderDialogFragment dialogFragment = new OrderDialogFragment();
+                    Bundle args = new Bundle();
+                    args.putString(KEY_PRODUCT_NAME, etName.getText().toString());
+                    dialogFragment.setArguments(args);
+                    dialogFragment.show(getFragmentManager(), TAG_ORDER_DIALOG);
                 }
             }
         });
@@ -226,7 +221,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
             /*
             Now try to save picture into database
              */
-            imagePhoto = ((BitmapDrawable) ivPhoto.getDrawable()).getBitmap();
+            Bitmap imagePhoto = ((BitmapDrawable) ivPhoto.getDrawable()).getBitmap();
             try {
                 values.put(InventoryContract.InventoryEntry.COLUMN_NAME_IMAGE, DbBitmapUtility.getBytes(imagePhoto));
             } catch (IOException e) {
