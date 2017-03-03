@@ -5,9 +5,13 @@ import android.content.ContentValues;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -19,14 +23,18 @@ import android.widget.Toast;
 
 import com.alexbernat.inventoryapp.data.InventoryContract;
 
+import java.io.IOException;
+
 public class DetailActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
     public static final String KEY_CONTENT_URI = "content Uri";
     public static final String TAG_DELETE_DIALOG = "deleteDialog";
+    static final int REQUEST_IMAGE_CAPTURE = 1;
     private static final int LOADER_ID = 2;
     private EditText etName, etQuantity, etPrice, etChange;
     private Button btnSale, btnReceive, btnSave, btnOrder, btnDelete;
     private ImageView ivPhoto;
+    private Bitmap imagePhoto;
     private boolean isAddMode = false;
     private Uri contentUri = null;
 
@@ -149,6 +157,30 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
                 etQuantity.setText(String.valueOf(quantity));
             }
         });
+
+        /**Trying to make photo
+         * at first we check if camera is available, then make an intent
+         */
+        if (getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
+            ivPhoto.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent photoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    if (photoIntent.resolveActivity(getPackageManager()) != null) {
+                        startActivityForResult(photoIntent, REQUEST_IMAGE_CAPTURE);
+                    }
+                }
+            });
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap photoBitmap = (Bitmap) extras.get("data");
+            ivPhoto.setImageBitmap(photoBitmap);
+        }
     }
 
     @Override
@@ -157,7 +189,8 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
                 InventoryContract.InventoryEntry.COLUMN_NAME_ID,
                 InventoryContract.InventoryEntry.COLUMN_NAME_PRODUCT_NAME,
                 InventoryContract.InventoryEntry.COLUMN_NAME_QUANTITY,
-                InventoryContract.InventoryEntry.COLUMN_NAME_PRICE};
+                InventoryContract.InventoryEntry.COLUMN_NAME_PRICE,
+                InventoryContract.InventoryEntry.COLUMN_NAME_IMAGE};
         return new CursorLoader(this, contentUri, projection, null, null, null);
     }
 
@@ -167,6 +200,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
             etName.setText(data.getString(data.getColumnIndex(InventoryContract.InventoryEntry.COLUMN_NAME_PRODUCT_NAME)));
             etQuantity.setText(String.valueOf(data.getInt(data.getColumnIndex(InventoryContract.InventoryEntry.COLUMN_NAME_QUANTITY))));
             etPrice.setText(String.valueOf(data.getDouble(data.getColumnIndex(InventoryContract.InventoryEntry.COLUMN_NAME_PRICE))));
+            ivPhoto.setImageBitmap(DbBitmapUtility.getImage(data.getBlob(data.getColumnIndex(InventoryContract.InventoryEntry.COLUMN_NAME_IMAGE))));
         }
     }
 
@@ -189,6 +223,15 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
             values.put(InventoryContract.InventoryEntry.COLUMN_NAME_PRODUCT_NAME, etName.getText().toString());
             values.put(InventoryContract.InventoryEntry.COLUMN_NAME_QUANTITY, Integer.parseInt(etQuantity.getText().toString()));
             values.put(InventoryContract.InventoryEntry.COLUMN_NAME_PRICE, Double.parseDouble(etPrice.getText().toString()));
+            /*
+            Now try to save picture into database
+             */
+            imagePhoto = ((BitmapDrawable) ivPhoto.getDrawable()).getBitmap();
+            try {
+                values.put(InventoryContract.InventoryEntry.COLUMN_NAME_IMAGE, DbBitmapUtility.getBytes(imagePhoto));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         return values;
     }
