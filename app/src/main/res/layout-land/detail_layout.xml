@@ -13,11 +13,10 @@
         <ImageView
             android:id="@+id/detail_image_product"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="128dp"
             android:layout_gravity="center_horizontal"
             android:layout_weight="1"
             android:contentDescription="@string/detail_image_description"
-            android:scaleType="center"
             android:src="@drawable/picture" />
 
         <LinearLayout

@@ -4,12 +4,14 @@ import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CursorAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,12 +39,15 @@ public class InventoryAdapter extends CursorAdapter {
         String productName = cursor.getString(cursor.getColumnIndex(InventoryContract.InventoryEntry.COLUMN_NAME_PRODUCT_NAME));
         int quantity = cursor.getInt(cursor.getColumnIndex(InventoryContract.InventoryEntry.COLUMN_NAME_QUANTITY));
         double price = cursor.getDouble(cursor.getColumnIndex(InventoryContract.InventoryEntry.COLUMN_NAME_PRICE));
+        Bitmap image = DbBitmapUtility.getImage(cursor.getBlob(cursor.getColumnIndex(InventoryContract.InventoryEntry.COLUMN_NAME_IMAGE)));
         TextView tvName = (TextView) view.findViewById(R.id.product_name);
         TextView tvQuantity = (TextView) view.findViewById(R.id.quantity);
         TextView tvPrice = (TextView) view.findViewById(R.id.price);
+        ImageView ivImage = (ImageView) view.findViewById(R.id.product_image);
         tvName.setText(productName);
         tvQuantity.setText(String.valueOf(quantity));
         tvPrice.setText(String.valueOf(price));
+        ivImage.setImageBitmap(image);
 
         Button btnSale = (Button) view.findViewById(R.id.sale_button);
         btnSale.setTag(cursor.getPosition());
