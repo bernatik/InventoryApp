@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Склад</string>
+    <string name="catalog_button_sale">Продать</string>
+    <string name="catalog_label_price">Цена: $ &#160;</string>
+    <string name="catalog_label_quantity">Количество: &#160;</string>
+    <string name="detail_activity_name_add">Новый товар</string>
+    <string name="detail_activity_name_edit">Редактировать товар</string>
+    <string name="detail_button_clear">Очистить</string>
+    <string name="detail_button_delete">Удалить</string>
+    <string name="detail_button_order">Заказать</string>
+    <string name="detail_button_receive">Получить</string>
+    <string name="detail_button_sale">Продать</string>
+    <string name="detail_button_save">Сохранить</string>
+    <string name="detail_image_description"></string>
+    <string name="detail_label_price">Цена:</string>
+    <string name="detail_label_quantity">Количество:</string>
+    <string name="detail_quantity_change">+ или -</string>
+    <string name="dialog_cancel">Отмена</string>
+    <string name="dialog_delete_confirm">Удалить</string>
+    <string name="dialog_delete_message">Вы уверены, что хотите удалить этот товар?</string>
+    <string name="dialog_delete_title">Удаление товара</string>
+    <string name="dialog_order_mail">Написать письмо</string>
+    <string name="dialog_order_message">Какой вид связи вы предпочитаете?</string>
+    <string name="dialog_order_phone">Позвонить</string>
+    <string name="dialog_order_title">Заказать</string>
+    <string name="dialog_quit_cancel">Продолжить редактирование</string>
+    <string name="dialog_quit_confirm">Выйти</string>
+    <string name="dialog_quit_message">У вас остались несохраненные изменения. Вы уверены, что хотите выйти?</string>
+    <string name="dialog_quit_title">Выход</string>
+    <string name="empty_list_text">Нажмите кнопку &quot;+&quot;, чтобы начать</string>
+    <string name="order_body">Здравствуйте!\\n</string>
+    <string name="order_subject">Заказ &#160;</string>
+    <string name="toast_check_inputs">Некоторые поля не заполнены. Заполните их, чтобы продолжить</string>
+    <string name="toast_created">Товар создан</string>
+    <string name="toast_deleted">Товар удален</string>
+    <string name="toast_enter_name">Укажите название товара</string>
+    <string name="toast_fail_create">Невозможно создать</string>
+    <string name="toast_fail_delete">Невозможно удалить</string>
+    <string name="toast_fail_order">Невозможно заказать</string>
+    <string name="toast_fail_update">Невозможно обновить</string>
+    <string name="toast_sale_failed">Недостаточно товаров для продажи</string>
+    <string name="toast_sale_successful">Успешно продан %1$d %2$s</string>
+    <string name="toast_updated">Товар обновлен</string>
+    <string name="detail_price_hint">Введите цену</string>
+    <string name="detail_product_name">Название товара</string>
+    <string name="detail_quantity" translatable="false">кол-во</string>
+</resources>

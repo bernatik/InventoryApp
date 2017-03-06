@@ -10,13 +10,13 @@
     <string name="catalog_button_sale">Sale</string>
 
     <!-- Labels and buttons at DetailActivity -->
-    <string name="detail_activity_name_key">key</string>
+    <string name="detail_activity_name_key" translatable="false">key</string>
     <string name="detail_activity_name_edit">Edit product</string>
     <string name="detail_activity_name_add">New product</string>
     <string name="detail_product_name">Name of product</string>
-    <string name="detail_image_description">Product image</string>
+    <string name="detail_image_description" translatable="false">Product image</string>
     <string name="detail_label_quantity">Quantity:</string>
-    <string name="detail_quantity" translatable="false">qty</string>
+    <string name="detail_quantity">qty</string>
     <string name="detail_quantity_change">+ or -</string>
     <string name="detail_label_price">Price:</string>
     <string name="detail_price_hint">Enter the price</string>
