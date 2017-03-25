@@ -11,6 +11,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 
 import com.alexbernat.inventoryapp.data.InventoryContract;
@@ -51,6 +52,26 @@ public class CatalogActivity extends AppCompatActivity implements LoaderManager.
         mRecyclerView.setHasFixedSize(true);
         adapter = new InventoryAdapter(this, this);
         mRecyclerView.setAdapter(adapter);
+
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            //called when a user swipes left or right on a ViewHolder
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                int idToDelete = (int) viewHolder.itemView.getTag();
+                String itemToDelete = String.valueOf(idToDelete);
+                /* create correct Uri to delete certain product */
+                Uri uri = InventoryContract.InventoryEntry.CONTENT_URI;
+                uri = uri.buildUpon().appendPath(itemToDelete).build();
+                getContentResolver().delete(uri, null, null);
+                /* refresh data in recycler view */
+                getLoaderManager().restartLoader(LOADER_ID, null, CatalogActivity.this);
+            }
+        }).attachToRecyclerView(mRecyclerView);
 
         getLoaderManager().initLoader(LOADER_ID, null, this);
     }

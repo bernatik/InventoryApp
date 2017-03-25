@@ -46,16 +46,21 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.Inve
     @Override
     public void onBindViewHolder(InventoryViewHolder holder, int position) {
         mCursor.moveToPosition(position);
+        /* read data from DB about current product */
+        int productId = mCursor.getInt(CatalogActivity.INDEX_NAME_ID);
         String productName = mCursor.getString(CatalogActivity.INDEX_PRODUCT_NAME);
         int quantity = mCursor.getInt(CatalogActivity.INDEX_QUANTITY);
         double price = mCursor.getDouble(CatalogActivity.INDEX_PRICE);
         Bitmap image = DbBitmapUtility.getImage(mCursor.getBlob(CatalogActivity.INDEX_IMAGE));
+        /* set data to view holder fields */
         holder.tvName.setText(productName);
         holder.tvQuantity.setText(String.valueOf(quantity));
         holder.tvPrice.setText(String.valueOf(price));
         holder.ivImage.setImageBitmap(image);
 
-        holder.btnSale.setTag(position);
+        holder.itemView.setTag(productId); // set Tag to View for correct delete when swipe
+
+        holder.btnSale.setTag(position); //set Tag to find the certain item
         holder.btnSale.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
