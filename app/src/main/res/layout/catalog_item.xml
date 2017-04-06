@@ -24,7 +24,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp" />
+        android:layout_marginRight="8dp"
+        android:transitionName="@string/picture_name"/>
 
     <TextView
         android:id="@+id/product_name"
@@ -37,6 +38,7 @@
         android:maxLines="1"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@android:color/black"
+        android:transitionName="@string/product_name"
         tools:text="Product name" />
 
     <TextView
@@ -55,6 +57,7 @@
         android:layout_below="@id/product_name"
         android:layout_toEndOf="@id/label_quantity"
         android:layout_toRightOf="@id/label_quantity"
+        android:transitionName="@string/quantity_name"
         tools:text="22" />
 
     <TextView
@@ -73,6 +76,7 @@
         android:layout_below="@id/label_quantity"
         android:layout_toEndOf="@id/label_price"
         android:layout_toRightOf="@id/label_price"
+        android:transitionName="@string/price_name"
         tools:text="$199.99" />
 
 

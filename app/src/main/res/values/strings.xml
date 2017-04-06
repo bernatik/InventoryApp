@@ -63,4 +63,10 @@
     <string name="dialog_quit_message">You have some unsaved changes. Are you sure you want to quit?</string>
     <string name="dialog_quit_cancel">Keep editing</string>
     <string name="dialog_quit_confirm">Quit</string>
+
+    <!-- Transition animation utilities, non-translatable -->
+    <string name="picture_name" translatable="false">picture</string>
+    <string name="price_name" translatable="false">price</string>
+    <string name="quantity_name" translatable="false">quantity</string>
+    <string name="product_name" translatable="false">name</string>
 </resources>

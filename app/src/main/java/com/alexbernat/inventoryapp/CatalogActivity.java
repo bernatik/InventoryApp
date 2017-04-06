@@ -1,5 +1,6 @@
 package com.alexbernat.inventoryapp;
 
+import android.app.ActivityOptions;
 import android.app.LoaderManager;
 import android.content.CursorLoader;
 import android.content.Intent;
@@ -8,13 +9,22 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Pair;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.alexbernat.inventoryapp.data.InventoryContract;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static android.R.attr.transitionName;
 
 public class CatalogActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>,
         InventoryAdapter.InventoryAdapterOnClickHandler {
@@ -69,6 +79,7 @@ public class CatalogActivity extends AppCompatActivity implements LoaderManager.
                 uri = uri.buildUpon().appendPath(itemToDelete).build();
                 getContentResolver().delete(uri, null, null);
                 /* refresh data in recycler view */
+                //adapter.notifyDataSetChanged();
                 getLoaderManager().restartLoader(LOADER_ID, null, CatalogActivity.this);
             }
         }).attachToRecyclerView(mRecyclerView);
@@ -109,10 +120,33 @@ public class CatalogActivity extends AppCompatActivity implements LoaderManager.
     }
 
     @Override
-    public void onClick(int idOfProduct) {
+    public void onClick(int idOfProduct, View view) {
         Uri uri = (InventoryContract.InventoryEntry.CONTENT_URI).buildUpon().appendPath(String.valueOf(idOfProduct)).build();
         Intent intent = new Intent(this, DetailActivity.class);
         intent.setData(uri);
-        startActivity(intent);
+        startActivity(intent, createTransitionAnimation(view));
+        //startActivity(intent);
+    }
+
+    private Bundle createTransitionAnimation(View view) {
+        /* take views that need to transit between activities */
+        ImageView picture = (ImageView) view.findViewById(R.id.product_image);
+        String transitionNamePicture = getString(R.string.picture_name);
+        TextView name = (TextView) view.findViewById(R.id.product_name);
+        String transititonNameProductName = getString(R.string.product_name);
+        TextView quantity = (TextView) view.findViewById(R.id.quantity);
+        String transitionNameQuantity = getString(R.string.quantity_name);
+        TextView price = (TextView) view.findViewById(R.id.price);
+        String transitionNamePrice = getString(R.string.price_name);
+
+        /* create pairs of vies and transition names to transit appropriate views */
+        ActivityOptions transitionOptions =
+                ActivityOptions.makeSceneTransitionAnimation(this,
+                        new Pair<View, String>(picture, transitionNamePicture),
+                        new Pair<View, String>(name, transititonNameProductName),
+                        new Pair<View, String>(quantity, transitionNameQuantity),
+                        new Pair<View, String>(price, transitionNamePrice));
+
+        return transitionOptions.toBundle();
     }
 }

@@ -99,7 +99,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.Inve
     }
 
     public interface InventoryAdapterOnClickHandler {
-        void onClick(int idOfProduct);
+        void onClick(int idOfProduct, View view);
     }
 
     public class InventoryViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -122,7 +122,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.Inve
         public void onClick(View v) {
             int itemId = getAdapterPosition();
             mCursor.moveToPosition(itemId);
-            mClickHandler.onClick(mCursor.getInt(CatalogActivity.INDEX_NAME_ID));
+            mClickHandler.onClick(mCursor.getInt(CatalogActivity.INDEX_NAME_ID), v);
         }
     }
 }
